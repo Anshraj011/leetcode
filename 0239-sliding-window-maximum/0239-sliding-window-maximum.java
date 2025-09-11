@@ -1,25 +1,28 @@
 class Solution {
-    static int check_max(int [] nums, int s, int e){
-        int maxi=Integer.MIN_VALUE;
-        for(int i=s;i<e;i++){
-            maxi=Math.max(nums[i],maxi);
-        }
-        return maxi;
-    }
     public int[] maxSlidingWindow(int[] nums, int k) {
-        int s=0;
-        int e=k;
-        int arr[]=new int[nums.length-k+1];
-        int index=0;
-        while(e<=nums.length){
-            int maxi=(check_max(nums,s,e));
-             arr[index]=maxi;
-             index++;
-            s++;
-            e++;
+         int n = nums.length;
+        int[] result = new int[n - k + 1];
+        Deque<Integer> dq = new ArrayDeque<>();
+        int index = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+
+            while (!dq.isEmpty() && nums[dq.peekLast()] < nums[i]) {
+                dq.pollLast();
+            }
+
+            dq.offerLast(i);
+
+            if (i >= k - 1) {
+                result[index++] = nums[dq.peekFirst()];
+            }
         }
-    
-     
-     return arr;
+
+        return result;
     }
 }
+
+

@@ -1,8 +1,6 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-        if(n==1 || m==1) return 1;
         int d[][]=new int[m][n];
-        
         d[0][0]=0;
         for(int i=1;i<n;i++){
             d[0][i]=1;
